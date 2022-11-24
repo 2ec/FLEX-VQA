@@ -1,5 +1,5 @@
 import os
-from flex import FLEX
+from tf_v2.flex import FLEX
 import numpy as np
 import pickle
 import params_cub as params

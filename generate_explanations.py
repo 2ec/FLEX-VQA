@@ -1,8 +1,9 @@
 import os
-from flex import FLEX
+from tf_v2.flex import FLEX
 import tables
 import argparse
-from nltk.tokenize.moses import MosesDetokenizer
+# from nltk.tokenize.moses import MosesDetokenizer
+from sacremoses import MosesDetokenizer
 import numpy as np
 import pickle
 import params_cub as params

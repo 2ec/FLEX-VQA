@@ -1,0 +1,84 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 1 files
+Detected 6 issues that require attention
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+File: flex.py
+--------------------------------------------------------------------------------
+EDIT: Should be OK - flex.py:59:26: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+EDIT: Using tf.compat.v1.nn.rnn_cell.DropoutWrapper - flex.py:70:34: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+EDIT: See above - flex.py:70:34: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+EDIT: See above - flex.py:93:34: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+EDIT: See above -flex.py:93:34: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+EDIT: Keep as is - flex.py:166:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+================================================================================
+Detailed log follows:
+
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'flex.py'
+ outputting to 'tf_v2/flex.py'
+--------------------------------------------------------------------------------
+
+35:8: INFO: Renamed 'tf.reset_default_graph' to 'tf.compat.v1.reset_default_graph'
+38:25: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+39:26: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+40:27: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+41:26: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+42:33: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+43:24: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+44:24: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+45:24: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+46:24: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+47:35: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+48:25: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+49:28: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+51:30: INFO: Renamed 'tf.contrib.rnn.LSTMStateTuple' to 'tf.nn.rnn_cell.LSTMStateTuple'
+52:30: INFO: Renamed 'tf.contrib.rnn.LSTMStateTuple' to 'tf.nn.rnn_cell.LSTMStateTuple'
+58:39: INFO: Renamed 'tf.random_uniform' to 'tf.random.uniform'
+59:26: INFO: Added keywords to args of function 'tf.nn.embedding_lookup'
+59:26: WARNING: tf.nn.embedding_lookup requires manual check. `partition_strategy` has been removed from tf.nn.embedding_lookup.  The 'div' strategy will be used by default.
+63:46: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+63:46: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+68:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+70:34: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+70:34: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+70:64: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+72:34: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+74:52: INFO: Renamed 'tf.nn.dynamic_rnn' to 'tf.compat.v1.nn.dynamic_rnn'
+81:41: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+81:41: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+86:29: INFO: Added keywords to args of function 'tf.transpose'
+88:28: INFO: Added keywords to args of function 'tf.transpose'
+91:13: INFO: Renamed 'tf.variable_scope' to 'tf.compat.v1.variable_scope'
+93:34: WARNING: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib.rnn. (Manual edit required) tf.contrib.rnn.* has been deprecated, and widely used cells/functions will be moved to tensorflow/addons repository. Please check it there and file Github issues if necessary.
+93:34: ERROR: Using member tf.contrib.rnn.DropoutWrapper in deprecated module tf.contrib. tf.contrib.rnn.DropoutWrapper cannot be converted automatically. tf.contrib will not be distributed with TensorFlow 2.0, please consider an alternative in non-contrib TensorFlow, a community-maintained repository such as tensorflow/addons, or fork the required code.
+93:64: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+95:34: INFO: Renamed 'tf.contrib.rnn.LSTMCell' to 'tf.compat.v1.nn.rnn_cell.LSTMCell'
+97:52: INFO: Renamed 'tf.nn.dynamic_rnn' to 'tf.compat.v1.nn.dynamic_rnn'
+103:36: INFO: tf.constant_initializer requires manual check. Initializers no longer have the dtype argument in the constructor or partition_info argument in the __call__ method.
+The calls have been converted to compat.v1 for safety (even though they may already have been correct).
+103:36: INFO: Renamed 'tf.constant_initializer' to 'tf.compat.v1.constant_initializer'
+108:29: INFO: Added keywords to args of function 'tf.transpose'
+110:28: INFO: Added keywords to args of function 'tf.transpose'
+111:68: INFO: Renamed keyword argument for tf.nn.softmax from dim to axis
+115:16: INFO: Added keywords to args of function 'tf.reduce_max'
+121:26: INFO: Added keywords to args of function 'tf.reduce_mean'
+124:29: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
+126:21: INFO: Renamed 'tf.train.Saver' to 'tf.compat.v1.train.Saver'
+127:20: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+127:38: INFO: Renamed 'tf.ConfigProto' to 'tf.compat.v1.ConfigProto'
+128:22: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+137:20: INFO: Added keywords to args of function 'tf.transpose'
+139:15: INFO: Renamed 'tf.where' to 'tf.compat.v1.where'
+140:44: INFO: Renamed 'tf.log' to 'tf.math.log'
+141:25: INFO: Added keywords to args of function 'tf.reduce_sum'
+141:54: INFO: Renamed keyword argument for tf.reduce_sum from reduction_indices to axis
+143:24: INFO: Added keywords to args of function 'tf.reduce_sum'
+143:115: INFO: Renamed keyword argument for tf.reduce_sum from reduction_indices to axis
+166:8: WARNING: *.save requires manual check. (This warning is only applicable if the code saves a tf.Keras model) Keras model.save now saves to the Tensorflow SavedModel format by default, instead of HDF5. To continue saving to HDF5, add the argument save_format='h5' to the save() function.
+--------------------------------------------------------------------------------
+
