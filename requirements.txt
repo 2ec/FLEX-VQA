@@ -1,7 +1,7 @@
 Keras==2.1.6
 nltk==3.2.5
 numpy==1.17.3
-opencv_python==3.4.0.12
+opencv_python==4.6.0.66
 pandas==0.21.0
 sacremoses==0.0.53
 tables==3.4.2
