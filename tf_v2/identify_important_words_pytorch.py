@@ -4,7 +4,7 @@ import numpy as np
 from copy import deepcopy
 import pickle
 import os
-from extract_visual_features import grad_cam
+from extract_visual_features import get_gradients_and_weights
 import params_cub as params
 from os import makedirs
 from utils import pre_pro_build_word_vocab, get_captions
@@ -119,7 +119,7 @@ def calculate_co_occurrence(image_relevant_words, vocab_size, word_to_ix, image_
             co_occurrence_info[layer_name]['mean_activations'] = mean_activations
 
             # -------- Find weight of each feature map in the layer --------
-            weights = grad_cam(net, class_id, layer_name, final_layer, data_layer)
+            _, weights = get_gradients_and_weights(net, class_id, layer_name, final_layer, data_layer)
             co_occurrence_info[layer_name]['weights'] = weights
 
             # -------- Normalize feature maps and find most important feature maps --------
@@ -241,7 +241,7 @@ def find_decision_relevant_words(image_relevant_words, vocab_size, ix_to_word, c
         for k in range(len(layers)):
             layer_name = layers[k]
             co_occurrence_stat_info[layer_name] = {}
-            weights_l = grad_cam(net, class_id, layer_name, final_layer)
+            _, weights_l = get_gradients_and_weights(net, class_id, layer_name, final_layer)
             co_occurrence_stat_info[layer_name]['layer_weights'] = weights_l
             layer_weights.append(weights_l)
 
