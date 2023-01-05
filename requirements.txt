@@ -13,4 +13,4 @@ tables==3.4.2
 tensorflow-gpu==1.4.0
 tensorflow-tensorboard==0.4.0rc3
 sacremoses==0.0.53
-tables=3.7.0
+tables==3.7.0
