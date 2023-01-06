@@ -1,8 +1,9 @@
 import os
-from tf_v2.flex import FLEX
+from tf_v1.flex import FLEX
 import numpy as np
 import pickle
 import params_cub as params
+from datetime import datetime
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -21,7 +22,8 @@ def train_flex():
     val_visual_feat_file = params.VAL_VISUAL_FEATURE_FILE
     batch_size = params.BATCH_SIZE
     keep_prob = params.KEEP_PROB
-    model_save_folder = os.path.join(params.MODEL_SAVE_FOLDER, params.MODEL_VERSION)
+    model_save_folder = os.path.join(
+        params.MODEL_SAVE_FOLDER, params.MODEL_VERSION)
     model_path = os.path.join(model_save_folder, 'flex')
 
     if not os.path.exists(model_save_folder):
@@ -36,11 +38,15 @@ def train_flex():
     train_relevance_scores = np.load(train_relevance_scores_file)
     val_relevance_scores = np.load(val_relevance_scores_file)
 
-    x_sentence_train = np.array(data_dict['x_train_word_sequences'], dtype=np.int32)
-    x_sentence_val = np.array(data_dict['x_val_word_sequences'], dtype=np.int32)
+    x_sentence_train = np.array(
+        data_dict['x_train_word_sequences'], dtype=np.int32)
+    x_sentence_val = np.array(
+        data_dict['x_val_word_sequences'], dtype=np.int32)
 
-    y_sentence_train = np.array(data_dict['y_train_word_sequences'], dtype=np.int32)
-    y_sentence_val = np.array(data_dict['y_val_word_sequences'], dtype=np.int32)
+    y_sentence_train = np.array(
+        data_dict['y_train_word_sequences'], dtype=np.int32)
+    y_sentence_val = np.array(
+        data_dict['y_val_word_sequences'], dtype=np.int32)
 
     lengths_train = np.array(data_dict['train_lengths'], dtype=np.int32)
     lengths_val = np.array(data_dict['val_lengths'], dtype=np.int32)
@@ -50,8 +56,20 @@ def train_flex():
     num_train = x_sentence_train.shape[0]
     num_validation = x_sentence_val.shape[0]
 
-    print("Number of train instances:", num_train)
-    print("Number of val instances:", num_validation, "\n")
+    num_train_instances_text = "Number of train instances: " + str(num_train)
+    num_val_instances_text = "Number of val instances: " + str(num_validation)
+    print(num_train_instances_text)
+    print(num_val_instances_text)
+
+    with open(os.path.join(model_save_folder, "output_logs.txt"), "a") as output_log_file:
+        output_log_file.writelines(
+            [
+                "Model version: ", params.MODEL_VERSION, "\n",
+                "Start time: ", datetime.now().strftime("%H:%M:%S"), "\n",
+                num_train_instances_text, "\n",
+                num_val_instances_text, "\n\n",
+            ]
+        )
 
     model_params = {
         'img_embed_size': params.IMG_EMBED_SIZE,
@@ -79,6 +97,15 @@ def train_flex():
     for epoch in range(num_epochs):
         print("\n------Epoch %d------" % (epoch + 1))
 
+        train_loss = 10
+        val_loss = 9
+
+        with open(os.path.join(model_save_folder, "output_logs.txt"), "a") as output_log_file:
+            log_text = "Current time={current_time} | Epcoh={epoch} | Train loss={train_loss:.4f} | Val loss={val_loss:.4f}\n".format(
+                current_time=str(datetime.now().strftime("%H:%M:%S")), epoch=epoch + 1, train_loss=train_loss, val_loss=val_loss)
+
+            output_log_file.write(log_text)
+
         train_loss = flex_model.train_epoch(visual_feat_file=train_visual_feat_file,
                                             x_word_seq=x_sentence_train,
                                             y_word_seq=y_sentence_train,
@@ -103,13 +130,19 @@ def train_flex():
         print("Train loss: %.4f" % train_loss)
         print("Validation loss: %.4f" % val_loss)
 
+        with open(os.path.join(model_save_folder, "output_logs.txt"), "a") as output_log_file:
+            log_text = "Current time", datetime.now().strftime(
+                "%H:%M:%S"), "| Epcoh=", epoch, "| Train loss=%.4f", train_loss, "| Val loss=%.4f", val_loss, "\n"
+            output_log_file.write(log_text)
+
         if val_loss < best_val_loss:
             print("Saving model")
             flex_model.save(model_path)
             best_val_loss = val_loss
         else:
             learning_rate /= 2
-            pickle.dump(logs, open(os.path.join(model_save_folder, 'logs.pkl'), 'wb'))
+            pickle.dump(logs, open(os.path.join(
+                model_save_folder, 'logs.pkl'), 'wb'))
 
     print("Writing Metrics to file...")
     pickle.dump(logs, open(os.path.join(model_save_folder, 'logs.pkl'), 'wb'))
