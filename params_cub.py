@@ -72,4 +72,4 @@ LAMBDA_VALUE = 1e-1
 KEEP_PROB = 0.5
 DROPOUT = True
 MODEL_SAVE_FOLDER = 'trained_models/cub/'  # path to save the trained model
-MODEL_VERSION = 'flex_v1'  # model version
+MODEL_VERSION = 'flex_v2'  # model version
